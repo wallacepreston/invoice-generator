@@ -2,6 +2,7 @@
 import path from 'path';
 import os from'os';
 import fs from 'fs';
+import csv from 'csvtojson';
 
 // import third party modules
 import { parse } from 'csv-parse';
@@ -44,7 +45,7 @@ export const readFile = async () => {
   const source = path.join(downloadsDir, mostRecentFilename);
 
   // read csv file
-  const fileContents = fs.readFileSync(source, 'utf8');
+  const fileContents = await await csv().fromFile(source);
 
   return fileContents;
 };
