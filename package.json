@@ -5,10 +5,12 @@
   "description": "A CLI tool for basic CSV file processing and editing",
   "main": "index.js",
   "scripts": {
+    "start:server": "node server.js",
+    "build": "parcel build index.html",
     "start:client": "parcel index.html --open",
     "writejson": "node writeJSON.js",
     "start:dev": "npm run writejson && npm run start:client",
-    "start": "npm run writejson && npm run start:client && npm run generate",
+    "start": "npm run writejson && npm run start:dev",
     "generate": "node generatePDF.js"
   },
   "repository": {
@@ -27,6 +29,7 @@
   "dependencies": {
     "csv": "6.0.5",
     "csvtojson": "2.0.10",
+    "express": "4.18.2",
     "lodash": "4.17.21",
     "puppeteer": "19.7.2",
     "react": "18.2.0",
