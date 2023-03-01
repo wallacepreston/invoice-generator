@@ -3,3 +3,8 @@ node_modules/
 .vscode
 .idea
 .env
+.cache
+
+# Generated files
+data.json
+react.pdf
