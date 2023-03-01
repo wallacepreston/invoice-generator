@@ -9,7 +9,7 @@
     "writejson": "node writeJSON.js",
     "start:dev": "npm run writejson && npm run start:client",
     "start": "npm run writejson && npm run start:client && npm run generate",
-    "generate": "npx babel-node generatePDF.js"
+    "generate": "node generatePDF.js"
   },
   "repository": {
     "type": "git",

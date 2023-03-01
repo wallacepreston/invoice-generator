@@ -2,9 +2,9 @@
 import path from 'path';
 import os from'os';
 import fs from 'fs';
-import csv from 'csvtojson';
 
 // import third party modules
+import csv from 'csvtojson';
 import _ from 'lodash';
 
 // polyfill dirname and filename vars
@@ -21,6 +21,9 @@ const getMostRecentFile = (dir) => {
       time: fs.statSync(dir + '/' + fileName)?.mtime?.getTime()
     };
   })
+  // remove hidden files
+  .filter(function (v) {
+    return !(/(^|\/)\.[^\/\.]/g).test(v.name); })
   // sort by recent
   .sort(function (a, b) {
     return b.time - a.time; })
@@ -32,9 +35,13 @@ const getMostRecentFile = (dir) => {
   return files[0];
 };
 
+export const getDownloadsDir = () => {
+  return path.join(os.homedir(), 'Downloads');
+};
+
 export const readFile = async () => {
   // get downloads directory
-  const downloadsDir = path.join(os.homedir(), 'Downloads');
+  const downloadsDir = getDownloadsDir();
 
   // get most recent filename
   const mostRecentFilename = getMostRecentFile(downloadsDir);
@@ -47,3 +54,16 @@ export const readFile = async () => {
 
   return fileContents;
 };
+
+export const pickColumns = (data, columns) => {
+  return _.map(data, (row) => _.pick(row, columns));
+}
+
+// rename only the columns passed in. Keep the rest as is
+export const renameColumns = (data, columns) => {
+  return _.map(data, (row) => {
+    return _.mapKeys(row, (value, key) => {
+      return columns[key] || key;
+    });
+  });
+}
