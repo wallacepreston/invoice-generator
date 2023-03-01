@@ -5,8 +5,6 @@ import fs from 'fs';
 import csv from 'csvtojson';
 
 // import third party modules
-import { parse } from 'csv-parse';
-import { stringify } from 'csv-stringify/sync';
 import _ from 'lodash';
 
 // polyfill dirname and filename vars
