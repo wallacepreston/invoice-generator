@@ -76,9 +76,18 @@ const App = () => {
                 <div>{process.env.REACT_APP_NAME}</div>
                 <div>{(new Date()).toDateString()}</div>
                 <div className="font-bold">Terms:</div>
-                <div className="font-bold">{/* Header 4: */}</div>
+                <div className="font-bold">{process.env.REACT_APP_INVOICE_NUMBER ? 'Invoice #' : ''}</div>
                 <div>Net 15</div>
-                <div>{/* Data value 4 */}</div>
+                <div>{process.env.REACT_APP_INVOICE_NUMBER}</div>
+                {
+                  process.env.REACT_APP_PO_NUMBER && <>
+                    <div className="font-bold">PO #</div>
+                    <div className="font-bold">{/* Item 6 Header */}</div>
+                    <div>{process.env.REACT_APP_PO_NUMBER}</div>
+                    <div>{/* Item 6 Data */}</div>
+                  </>
+                }
+
               </div>
             </div>
           </div>
