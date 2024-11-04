@@ -5,7 +5,8 @@ dotenv.config();
 
 // edit env var to change the hourly rate and total
 const {
-  REACT_APP_HOURLY_RATE: hourlyRate = 50,
+  REACT_APP_HOURLY_RATE: hourlyRate = 100,
+  REACT_APP_TOTAL_BILLED: totalBilled = 4000,
 } = process.env;
 
 // format a float as a dollar amount with commas and decimal to 2 places
@@ -20,7 +21,15 @@ const formatDollarAmount = (amount) => {
 const App = () => {
   const headers = Object.keys(data[0]);
   let grandTotal = 0;
-  
+
+  const totalHoursNonRounded = data.reduce((acc, item) => {
+    return acc + Number(item.Decimal);
+  }, 0);
+
+  const totalHoursRounded = totalHoursNonRounded?.toFixed(2);
+
+  const totalAmount = parseFloat(hourlyRate * totalHoursNonRounded)?.toFixed(2);
+
   return (
     <div>
 
@@ -124,6 +133,28 @@ const App = () => {
                     }
                   )
                 }
+                <tr className="bg-white border-b text-gray-400 ">
+                  <td className="px-1 py-2 font-bold text-lg whitespace-nowrap">Totals</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className="px-1 py-2 font-bold text-lg whitespace-nowrap">{totalHoursRounded}</td>
+                  <td className="px-1 py-2 font-bold text-lg whitespace-nowrap">{formatDollarAmount(grandTotal)}</td>
+                </tr>
+                {
+                  Boolean(totalBilled) && Number(totalBilled) < grandTotal && (
+                    <tr className="bg-white border-b text-red-900">
+                      <td className="px-1 py-2 font-bold text-lg whitespace-nowrap">Discount</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td className="px-1 py-2 font-bold text-lg whitespace-nowrap">({formatDollarAmount(grandTotal - totalBilled)})</td>
+                    </tr>
+                  )
+                }
                 <tr className="bg-white border-b ">
                   <td className="px-1 py-2 font-bold text-gray-900 text-lg whitespace-nowrap">Total Invoice Amount</td>
                   <td></td>
@@ -131,8 +162,9 @@ const App = () => {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="px-1 py-2 font-bold text-gray-900 text-lg whitespace-nowrap">{formatDollarAmount(grandTotal)}</td>
+                  <td className="px-1 py-2 font-bold text-gray-900 text-lg whitespace-nowrap">{formatDollarAmount(Number(totalBilled) || grandTotal)}</td>
                 </tr>
+                
               </tbody>
           </table>
       </div>
