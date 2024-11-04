@@ -6,7 +6,7 @@ dotenv.config();
 // edit env var to change the hourly rate and total
 const {
   REACT_APP_HOURLY_RATE: hourlyRate = 100,
-  REACT_APP_TOTAL_BILLED: totalBilled = 4000,
+  REACT_APP_TOTAL_BILLED: totalBilled = 0,
 } = process.env;
 
 // format a float as a dollar amount with commas and decimal to 2 places
